@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, Coffee, Utensils, Home, AlertCircle, Sparkles, Heart, Train, Music, Volleyball, Camera } from 'lucide-react';
+import diamondImg from './assets/diamond.png';
 
 export default function BirthdayTrip() {
     const [showIntro, setShowIntro] = useState(true);
@@ -21,7 +22,8 @@ export default function BirthdayTrip() {
     const IntroAnimation = () => (
         <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white transition-opacity duration-1000
     ${showIntro ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-            <div className="relative mb-8">
+
+            <div className="relative mb-8 z-10">
                 {/* 鑽石動畫 */}
                 <div
                     className="w-24 h-24 bg-blue-100 rotate-45 animate-pulse flex items-center justify-center shadow-[0_0_20px_rgba(0,92,168,0.5)]">
@@ -76,6 +78,9 @@ export default function BirthdayTrip() {
                 backgroundImage: 'radial-gradient(#005CA8 1px, transparent 1px)', backgroundSize: '30px 30px'
             }}>
             </div>
+
+            {/* 隨機鑽石背景 */}
+            <RandomDiamonds count={30} minSize={40} maxSize={80} className="fixed inset-0 pointer-events-none z-0 opacity-20" />
 
             {showIntro &&
                 <IntroAnimation />}
@@ -354,3 +359,55 @@ const NoticeItem = ({ num, title, desc }) => (
         </div>
     </div>
 );
+
+const RandomDiamonds = ({ count = 10, minSize = 20, maxSize = 50, className = "" }) => {
+    const [diamonds, setDiamonds] = useState([]);
+
+    useEffect(() => {
+        // Grid based distribution algorithm
+        const cols = Math.ceil(Math.sqrt(count));
+        const rows = Math.ceil(count / cols);
+        const cellWidth = 100 / cols;
+        const cellHeight = 100 / rows;
+
+        const newDiamonds = Array.from({ length: count }).map((_, i) => {
+            const row = Math.floor(i / cols);
+            const col = i % cols;
+
+            // Randomize position within the grid cell with 10% padding to avoid edge bunching
+            const top = (row * cellHeight) + (Math.random() * cellHeight * 0.8) + (cellHeight * 0.1);
+            const left = (col * cellWidth) + (Math.random() * cellWidth * 0.8) + (cellWidth * 0.1);
+
+            return {
+                id: i,
+                top,
+                left,
+                size: Math.random() * (maxSize - minSize) + minSize,
+                rotation: Math.random() * 360,
+                delay: Math.random() * 5,
+                duration: Math.random() * 10 + 10, // 10-20s duration
+            };
+        });
+        setDiamonds(newDiamonds);
+    }, [count, minSize, maxSize]);
+
+    return (
+        <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
+            {diamonds.map((d) => (
+                <img
+                    key={d.id}
+                    src={diamondImg}
+                    alt=""
+                    style={{
+                        position: 'absolute',
+                        top: `${d.top}%`,
+                        left: `${d.left}%`,
+                        width: `${d.size}px`,
+                        transform: `rotate(${d.rotation}deg)`,
+                    }}
+                    className="opacity-60 mix-blend-multiply transition-all duration-1000"
+                />
+            ))}
+        </div>
+    );
+};
