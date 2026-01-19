@@ -9,6 +9,18 @@ export default function BirthdayTrip() {
     const [showIntro, setShowIntro] = useState(true);
     const [showGame, setShowGame] = useState(false);
     const [activeTab, setActiveTab] = useState('itinerary');
+    const [secretClickCount, setSecretClickCount] = useState(0);
+
+    const handleSecretClick = () => {
+        setSecretClickCount(prev => {
+            const newCount = prev + 1;
+            if (newCount >= 5) {
+                setShowIntro(false);
+                setShowGame(false);
+            }
+            return newCount;
+        });
+    };
 
     // 模擬鑽石閃爍動畫
     useEffect(() => {
@@ -29,7 +41,10 @@ export default function BirthdayTrip() {
 
             <div className="relative mb-6 z-10 flex flex-col items-center">
                 {/* 壽星照片 */}
-                <div className="relative w-32 h-32 mb-4 animate-[bounce_2s_infinite]">
+                <div
+                    onClick={handleSecretClick}
+                    className="relative w-32 h-32 mb-4 animate-[bounce_2s_infinite] cursor-default select-none"
+                >
                     <img
                         src={birthdayBoyImg}
                         alt="Birthday Boy"
