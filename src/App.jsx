@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, Coffee, Utensils, Home, AlertCircle, Sparkles, Heart, Train, Music, Volleyball, Camera, Clock, ExternalLink } from 'lucide-react';
 import diamondImg from './assets/diamond.png';
 import birthdayBoyImg from './assets/birthday_boy.png';
+import hint1Img from './assets/hint1.png';
+import hint2Img from './assets/hint2.JPG';
 
 export default function BirthdayTrip() {
     const [showIntro, setShowIntro] = useState(true);
+    const [showGame, setShowGame] = useState(false);
     const [activeTab, setActiveTab] = useState('itinerary');
 
     // 模擬鑽石閃爍動畫
@@ -45,7 +48,7 @@ export default function BirthdayTrip() {
                 阿堡
             </h2>
 
-            <button onClick={() => setShowIntro(false)}
+            <button onClick={() => { setShowIntro(false); setShowGame(true); }}
                 className={`${BgPearlBlue} text-white px-8 py-3 rounded-full text-lg shadow-lg hover:scale-105 transition-transform
       flex items-center gap-2`}
             >
@@ -56,6 +59,90 @@ export default function BirthdayTrip() {
             <p className="mt-8 text-sm text-gray-400">森日快樂~</p>
         </div>
     );
+
+    // 猜地點小遊戲
+    const GuessGame = () => {
+        const [guess, setGuess] = useState('');
+        const [hintLevel, setHintLevel] = useState(1); // Default show level 1
+        const [error, setError] = useState('');
+
+        const checkAnswer = () => {
+            if (guess.includes('高雄')) {
+                setShowGame(false);
+            } else {
+                setError('再試試看！提示：兩個字。');
+                setGuess('');
+            }
+        };
+
+        return (
+            <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white transition-opacity duration-500 overflow-y-auto`}>
+                <div className="w-full max-w-md px-6 py-6 flex flex-col items-center">
+                    <h2 className={`text-2xl font-bold ${PearlBlue} mb-4`}>猜猜我們要去哪？</h2>
+
+                    <div className="space-y-4 w-full mb-6">
+                        {/* Hint 1: Image */}
+                        <div className="animate-fadeIn w-full flex flex-col items-center">
+                            <span className="text-xs text-gray-400 mb-1">提示 1</span>
+                            <div className="rounded-xl overflow-hidden shadow-sm border border-gray-100 p-1 bg-white">
+                                <img src={hint1Img} alt="Hint 1" className="w-full h-40 object-cover rounded-lg" />
+                            </div>
+                        </div>
+
+                        {/* Hint 2: Image */}
+                        {hintLevel >= 2 && (
+                            <div className="animate-fadeIn w-full flex flex-col items-center">
+                                <span className="text-xs text-gray-400 mb-1">提示 2</span>
+                                <div className="rounded-xl overflow-hidden shadow-sm border border-gray-100 p-1 bg-white">
+                                    <img src={hint2Img} alt="Hint 2" className="w-full h-40 object-cover rounded-lg" />
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Hint 3: Text */}
+                        {hintLevel >= 3 && (
+                            <div className="animate-fadeIn w-full text-center">
+                                <span className="text-xs text-gray-400">提示 3</span>
+                                <div className="bg-blue-50 p-3 rounded-lg text-lg font-bold text-[#005CA8] mt-1 shadow-inner">
+                                    藍色
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <input
+                        type="text"
+                        value={guess}
+                        onChange={(e) => {
+                            setGuess(e.target.value);
+                            setError('');
+                        }}
+                        onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
+                        placeholder="請輸入地點..."
+                        className="w-full p-3 rounded-xl border-2 border-blue-100 focus:border-[#005CA8] outline-none text-center text-lg mb-3"
+                    />
+
+                    <button
+                        onClick={checkAnswer}
+                        className={`${BgPearlBlue} text-white px-8 py-3 rounded-full text-lg shadow-lg hover:scale-105 transition-transform w-full mb-4`}
+                    >
+                        出發！
+                    </button>
+
+                    {error && <p className="text-red-400 text-sm mb-2 animate-bounce">{error}</p>}
+
+                    {hintLevel < 3 && (
+                        <button
+                            onClick={() => setHintLevel(prev => prev + 1)}
+                            className="text-gray-400 text-sm underline hover:text-[#005CA8] transition-colors"
+                        >
+                            再給我一個提示 ({hintLevel}/3)
+                        </button>
+                    )}
+                </div>
+            </div>
+        );
+    };
 
     // 分頁內容
     const renderContent = () => {
@@ -84,8 +171,9 @@ export default function BirthdayTrip() {
             {/* 隨機鑽石背景 */}
             <RandomDiamonds count={30} minSize={40} maxSize={80} className="fixed inset-0 pointer-events-none z-0 opacity-20" />
 
-            {showIntro &&
-                <IntroAnimation />}
+            {showIntro && <IntroAnimation />}
+
+            {showGame && <GuessGame />}
 
             {/* 頂部導航 */}
             <nav className="sticky top-0 z-40 bg-white/90 backdrop-blur-md shadow-sm border-b border-blue-100">
