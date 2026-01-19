@@ -245,15 +245,24 @@ const FoodCategory = ({ title, icon, children }) => (
     </div>
 );
 
-const FoodItem = ({ name, tag, desc }) => (
-    <div className="flex flex-col border-l-2 border-blue-100 pl-3 py-1 hover:border-[#005CA8] transition-colors">
-        <div className="flex justify-between items-center mb-1">
-            <span className="font-bold text-gray-800">{name}</span>
-            <span className="text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">{tag}</span>
-        </div>
-        <p className="text-xs text-gray-500">{desc}</p>
-    </div>
-);
+const FoodItem = ({ name, tag, desc }) => {
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name + " 高雄")}`;
+
+    return (
+        <a href={mapUrl} target="_blank" rel="noopener noreferrer" className="block group">
+            <div className="flex flex-col border-l-2 border-blue-100 pl-3 py-1 group-hover:border-[#005CA8] transition-colors">
+                <div className="flex justify-between items-center mb-1">
+                    <div className="flex items-center gap-1">
+                        <span className="font-bold text-gray-800 group-hover:text-[#005CA8] transition-colors">{name}</span>
+                        <ExternalLink size={12} className="text-gray-300 group-hover:text-[#005CA8] transition-colors opacity-0 group-hover:opacity-100" />
+                    </div>
+                    <span className="text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">{tag}</span>
+                </div>
+                <p className="text-xs text-gray-500">{desc}</p>
+            </div>
+        </a>
+    );
+};
 
 // 子組件：住宿資訊
 const HotelSection = ({ PearlBlue }) => (
@@ -321,9 +330,11 @@ const NoticeSection = ({ PearlBlue, BgPearlBlue }) => (
             </h3>
 
             <div className="space-y-4">
-                <NoticeItem num="1" title="🎒 絕對要輕便行李！" desc="Day 1 下午我們會去逛市場和散步，行李太重會變成累贅喔！帶一套換洗衣物即可。" />
+                <NoticeItem num="4" title="🚄 準時出發" desc="08:30 在「台北車站」集合，我們要搭 09:01 的高鐵。" />
+                <NoticeItem num="1" title="🎒 輕便行李！" desc="Day 1 下午我們會去逛市場和散步，兩天一夜而已！帶一套換洗衣物即可。" />
                 <NoticeItem num="2" title="👟 穿最好走的鞋" desc="兩天的行程包含逛市場、散步，舒適的球鞋是必備的。" />
-                <NoticeItem num="3" title="🌞 南國豔陽" desc="高雄太陽很熱情，記得帶防曬乳或帽子。" />
+                <NoticeItem num="3" title="🧥 洋蔥式穿搭" desc="高雄白天溫暖但早晚偏涼，加上室內場館可能有空調，記得帶件薄外套以備不時之需。" />
+                <NoticeItem num="5" title="😊 一顆愉快的心" desc="哈皮哈皮哈皮~！" />
             </div>
         </div>
 
@@ -339,7 +350,7 @@ const NoticeSection = ({ PearlBlue, BgPearlBlue }) => (
                     </p>
                     <p className="text-gray-500 text-xs mt-2">
                         建議阿堡身上可以帶點寶藍色元素（衣服、飾品皆可），走在巨蛋附近可能會遇到好事喔！
-                        <span className="opacity-0">（SJ應援色嘿嘿）</span>
+                        <span className="opacity-0">（嘿嘿~~）</span>
                     </p>
                 </div>
                 <div
