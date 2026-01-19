@@ -248,7 +248,7 @@ const ItinerarySection = ({ PearlBlue, LightBlueBg }) => (
             <div className="flex items-center gap-3 mb-6 relative">
                 <div className={`w-8 h-8 ${LightBlueBg} rounded-full flex items-center justify-center font-bold text-blue-600
         z-10`}>1</div>
-                <h3 className="text-xl font-bold text-gray-800">1/24 (六) 高雄流浪記</h3>
+                <h3 className="text-xl font-bold text-gray-800">1/24 (六) 高雄趴趴走</h3>
             </div>
 
             <TimelineItem time="09:01" title="高鐵出發" icon={<Train size={16} />} content="台北 → 左營 (1309車次)。帶著好心情南下囉！"
