@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Coffee, Utensils, Home, AlertCircle, Sparkles, Heart, Train, Music, Volleyball, Camera } from 'lucide-react';
+import { Calendar, MapPin, Coffee, Utensils, Home, AlertCircle, Sparkles, Heart, Train, Music, Volleyball, Camera, Clock, ExternalLink } from 'lucide-react';
 import diamondImg from './assets/diamond.png';
+import birthdayBoyImg from './assets/birthday_boy.png';
 
 export default function BirthdayTrip() {
     const [showIntro, setShowIntro] = useState(true);
@@ -23,16 +24,17 @@ export default function BirthdayTrip() {
         <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white transition-opacity duration-1000
     ${showIntro ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
 
-            <div className="relative mb-8 z-10">
-                {/* 鑽石動畫 */}
-                <div
-                    className="w-24 h-24 bg-blue-100 rotate-45 animate-pulse flex items-center justify-center shadow-[0_0_20px_rgba(0,92,168,0.5)]">
-                    <div className="w-16 h-16 bg-[#005CA8] shadow-inner flex items-center justify-center">
-                        <Sparkles className="text-white w-10 h-10 -rotate-45 animate-spin-slow" />
+            <div className="relative mb-6 z-10 flex flex-col items-center">
+                {/* 壽星照片 */}
+                <div className="relative w-32 h-32 mb-4 animate-[bounce_2s_infinite]">
+                    <img
+                        src={birthdayBoyImg}
+                        alt="Birthday Boy"
+                        className="w-full h-full object-cover rounded-full border-4 border-[#005CA8] shadow-xl"
+                    />
+                    <div className="absolute -bottom-2 -right-2 bg-yellow-400 text-xs font-bold px-2 py-1 rounded-full shadow-md rotate-12">
+                        壽星
                     </div>
-                </div>
-                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
-                    <div className="w-32 h-32 border-2 border-blue-200 rotate-45 animate-ping rounded-sm"></div>
                 </div>
             </div>
 
@@ -48,10 +50,10 @@ export default function BirthdayTrip() {
       flex items-center gap-2`}
             >
                 <Sparkles size={20} />
-                開啟你的流浪旅程
+                開啟妳的生日之旅
             </button>
 
-            <p className="mt-8 text-sm text-gray-400">高雄 / 美食 / 驚喜</p>
+            <p className="mt-8 text-sm text-gray-400">森日快樂~</p>
         </div>
     );
 
@@ -266,14 +268,21 @@ const HotelSection = ({ PearlBlue }) => (
                 </div>
             </div>
             <div className="p-6">
-                <h2 className="text-2xl font-bold text-gray-800 mb-1">福容徠旅 高雄</h2>
-                <p className="text-sm text-gray-400 mb-6">Fullon Poshtel Kaohsiung</p>
+                <div className="mb-6">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-1">福容徠旅 高雄</h2>
+                    <a href="https://www.fullon-hotels.com.tw/fullon-poshtels/kh/tw/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-[#005CA8] hover:underline inline-flex items-center gap-1 transition-colors hover:text-blue-700">
+                        Fullon Poshtel Kaohsiung <ExternalLink size={14} />
+                    </a>
+                </div>
 
                 <div className="space-y-4">
+                    <HotelFeature icon={<Clock className="text-[#005CA8]" />} title="Check-in / Check-out" desc="入住 16:00  •  退房 11:00" />
                     <HotelFeature icon={<MapPin className="text-[#005CA8]" />} title="絕佳位置" desc="前金區，捷運市議會站 (O4) 4號出口步行2分鐘。" />
                     <HotelFeature icon={<Coffee className="text-[#005CA8]" />} title="早餐時光" desc="07:00 - 11:00，睡飽飽再吃。" />
-                    <HotelFeature icon={<Sparkles className="text-[#005CA8]" />} title="樂活時光 (Lohas Time)" desc="13:00 -
-        22:00，提供免費飲料與零食！" />
+                    <HotelFeature icon={<Sparkles className="text-[#005CA8]" />} title="樂活時光 (Lohas Time)" desc="13:00 - 22:00，提供免費飲料與零食！" />
                 </div>
             </div>
         </div>
@@ -283,9 +292,9 @@ const HotelSection = ({ PearlBlue }) => (
                 <Heart size={20} fill="#005CA8" />
             </div>
             <div>
-                <h4 className={`font-bold ${PearlBlue} mb-1`}>給阿堡的特別備註</h4>
+                <h4 className={`font-bold ${PearlBlue} mb-1`}>備註</h4>
                 <p className="text-sm text-gray-600">
-                    雖然這次是來這裡「流浪」的，但住的地方絕對不能馬虎！IKEA 風格設計，簡約又舒適，就在橘線上，去哪都方便！
+                    IKEA 風格設計，簡約又舒適，就在橘線上，去哪都方便！
                 </p>
             </div>
         </div>
