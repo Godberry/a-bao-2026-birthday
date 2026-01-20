@@ -3,7 +3,7 @@ import { Calendar, MapPin, Coffee, Utensils, Home, AlertCircle, Sparkles, Heart,
 import diamondImg from './assets/diamond.png';
 import birthdayBoyImg from './assets/birthday_boy.png';
 import hint1Img from './assets/hint1.png';
-import hint2Img from './assets/hint2.JPG';
+import hint2Img from './assets/hint2.jpg';
 
 export default function BirthdayTrip() {
     const [showIntro, setShowIntro] = useState(true);
@@ -264,6 +264,10 @@ const ItinerarySection = ({ PearlBlue, LightBlueBg }) => (
                 highlight={true}
                 PearlBlue={PearlBlue}
             />
+            <TimelineItem time="18:30" title="瑞豐夜市吃晚餐" icon={<Utensils size={16} />} content="就在巨蛋旁邊！在地人也愛逛的夜市。"
+                PearlBlue={PearlBlue} />
+            <TimelineItem time="20:00" title="高雄流行音樂中心" icon={<Music size={16} />} content="搭乘輕軌前往真愛碼頭，看點亮的寶藍色高雄夜晚，享受港都的浪漫微風。"
+                PearlBlue={PearlBlue} />
             <TimelineItem time="21:30" title="飯店 Check-in" icon={<Home size={16} />} content="回飯店休息，如果趕得上還能喝免費飲料！"
                 PearlBlue={PearlBlue} />
         </div>
